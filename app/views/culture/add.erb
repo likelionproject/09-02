@@ -131,7 +131,14 @@
         <div class="rightContainer">
             <h1>공연 등록하기</h1>
             <form name='input_form' id='input_form' role="form" action="/culture/outputsave" method="POST" enctype="multipart/form-data" >
-                <input type="hidden" name="pf_userid" value="<%= current_user.id %>">
+                <% if current_user.performanceinfo.nil? %>
+                    <script>
+                        alert("공연자 정보를 먼저 등록해주세요. ");
+                        window.location.replace("http://alone-likelionproject.c9.io/culture/pfupload");
+                    </script>
+                <% else %>
+                    <input type="hidden" name="pf_userid" value="<%= current_user.performanceinfo.id %>">
+                <% end %>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                         <div class="form-group">
@@ -255,22 +262,7 @@ $(document).ready(function(){
     ).done(function(){
         $.getScript('/js/setmarker.js');
     });
-    $.when(
-        $.getScript('/js/clndr.js'),
-        $.getScript('/js/calendar.js'),
-        $.getScript('/js/bootstrap-datepicker.js'),
-        $.Deferred(function( deferred ){
-              $( deferred.resolve );
-        })
-    ).done(function (){
-        $('#sandbox-container').datepicker({
-            // datepicker option
-            format: "yyyy/mm/dd",
-            language: "kr",
-            todayHighlight: true
-        }).on('changeDate', function(e){
-          $('#dt_due').val(e.format('yyyy/mm/dd'));
-        });
-    });
 });
 </script>
+<script src='/js/bootstrap-datepicker.js'></script>
+

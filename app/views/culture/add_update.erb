@@ -149,9 +149,9 @@
                 <br>
                     <div class="form-group">
                         <label>공연 날짜</label> 
-                    </div>
-                    <div id='sandbox-container'>
-                        <input type='hidden' id="dt_due" name="new_dt_due" value="<%=@pid.pf_date%>">
+                        <div id='sandbox-container'>
+                            <input type='hidden' id="dt_due" name="new_dt_due" value="<%=@pid.pf_date%>">
+                        </div>
                     </div>
                     <script>
                         $('#sandbox-container').datepicker({
@@ -159,9 +159,8 @@
                             format: "yyyy/mm/dd",
                             language: "kr",
                             todayHighlight: true
-                            
                         }).on('changeDate', function(e){
-                          $('#dt_due').val(e.format('yyyy/mm/dd'))
+                          $('#dt_due').val(e.format('yyyy/mm/dd'));
                         });
                     </script>
                     
@@ -249,14 +248,7 @@ $(document).ready(function(){
     ).done(function(){
         <%= render :partial => 'culture/setmarker_update.js' %>
     });
-    $.when(
-        $.getScript('/js/bootstrap-datepicker.js'),
-        $.getScript('/js/clndr.js'),
-        $.Deferred(function( deferred ){
-              $( deferred.resolve );
-        })
-    ).done(function (){
-        $.getScript('/js/calendar.js');
-    });
 });
 </script>
+<script src='/js/bootstrap-datepicker.js'></script>
+

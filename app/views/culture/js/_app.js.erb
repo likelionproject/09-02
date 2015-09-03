@@ -246,52 +246,39 @@
                     null,
                     null,
                     null,
-                    new google.maps.Size(35, 35)),
-                  zIndex: 1000
+                    new google.maps.Size(50, 50)),
+                  zIndex: 800
               });
         
               map.setCenter(currentPos);
-              map.setZoom(13);
+              map.setZoom(14);
             }, function() {
               alert("위치정보를 불러 올 수 없습니다. ");
               map.setCenter(new google.maps.LatLng(37.545087, 126.987403));   // 기본 화면 center 설정
-              map.setZoom(13);
+              map.setZoom(14);
             });
         } else {
             // Browser doesn't support Geolocation
             alert("위치정보를 불러 올 수 없습니다. ");
             map.setCenter(new google.maps.LatLng(37.545087, 126.987403));   // 기본 화면 center 설정
-            map.setZoom(13);
+            map.setZoom(14);
         } 
         
-
-        if ($('#address').length > 0) {
-            newMarker = new google.maps.Marker({
-                position: new google.maps.LatLng(40.6984237,-73.9890044),
-                map: map,
-                icon: new google.maps.MarkerImage( 
-                    '/images/marker-new.png',
-                    null,
-                    null,
-                    // new google.maps.Point(0,0),
-                    null,
-                    new google.maps.Size(36, 36)
-                ),
-                draggable: true,
-                animation: google.maps.Animation.DROP,
-            });
-
-            google.maps.event.addListener(newMarker, "mouseup", function(event) {
-                var latitude = this.position.lat();
-                var longitude = this.position.lng();
-                $('#latitude').text(this.position.lat());
-                $('#longitude').text(this.position.lng());
-            });
-        }
-
+        /* 지역 검색 */
+        $('#place_search').change(function(){
+            $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+$('#place_search').val(), 
+                function(data, result){
+                    map.setCenter(new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng));
+                    map.setZoom(14);
+                });
+        });
         addMarkers(props, map);
     }, 300);
-
+    
+    
+    
+    
+    
     if(!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch)) {
         $('body').addClass('no-touch');
         isDevice = false;
@@ -304,7 +291,8 @@
     $('.search input').blur(function() {
         $('.searchIcon').removeClass('active');
     });
-
+    
+    
     // Notifications list items pulsate animation
     $('.notifyList a').hover(
         function() {

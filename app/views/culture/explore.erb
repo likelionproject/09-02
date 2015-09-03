@@ -19,7 +19,7 @@
     <!--맨위 검색바 시작-->
     <div class="search">
         <span class="searchIcon icon-magnifier"></span>
-        <input type="text" name="search" placeholder="장소 검색">
+        <input type="text" id="place_search" name="search" placeholder="장소 검색">
         
     </div>
     <!--맨위 검색바 끝-->
@@ -148,17 +148,20 @@
                             </a>
                             <ul class="dropdown-menu dropdown-select full" role="menu">
                                 <li class="active"><input type="radio" name="pType" checked="checked"><a href="#">모두 보기</a></li>
-                                <li><input type="radio" name="pType"><a href="#"></a>뮤지컬</li>
-                                <li><input type="radio" name="pType"><a href="#"></a>연극</li>
-                                <li><input type="radio" name="pType"><a href="#"></a>콘서트</li>
-                                <li><input type="radio" name="pType"><a href="#"></a>클래식 무용</li>
-                                <li><input type="radio" name="pType"><a href="#"></a>전시</li>
-                                <li><input type="radio" name="pType"><a href="#"></a>스포츠</li>
-                                <li><input type="radio" name="pType"><a href="#"></a>버스킹</li>
-                                <li><input type="radio" name="pType"><a href="#"></a>아마추어 동아리</li>
-                                <li><input type="radio" name="pType"><a href="#"></a>기타</li>
+                                <li><input id="radio_filter0" type="radio" name="pType" value="뮤지컬"><a href="#">뮤지컬</a></li>
+                                <li><input id="radio_filter1" type="radio" name="pType" value="연극"><a href="#">연극</a></li>
+                                <li><input id="radio_filter2" type="radio" name="pType" value="콘서트"><a href="#">콘서트</a></li>
+                                <li><input id="radio_filter3" type="radio" name="pType" value="클래식 무용"><a href="#">클래식 무용</a></li>
+                                <li><input id="radio_filter4" type="radio" name="pType" value="전시"><a href="#">전시</a></li>
+                                <li><input id="radio_filter5" type="radio" name="pType" value="스포츠"><a href="#">스포츠</a></li>
+                                <li><input id="radio_filter6" type="radio" name="pType" value="버스킹"><a href="#">버스킹</a></li>
+                                <li><input id="radio_filter7" type="radio" name="pType" value="아마추어 동아리"><a href="#">아마추어 동아리</a></li>
+                                <li><input id="radio_filter8" type="radio" name="pType" value="기타"><a href="#">기타</a></li>
                             <!--공연카테고리 토글다운 끝-->
                             </ul>
+                            <script>
+                                $('#radio_filter[' + 1 + ']')
+                            </script>
                         </div>
                     </div>
                 </div>

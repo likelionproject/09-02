@@ -123,7 +123,7 @@
                         </div>
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                 <div class="figure">
-                                <img src="/images/prop/2-1.png" alt="image">
+                                <img src="<%=@pfid.team_pic %>" alt="image">
                                 </div>
                                 
                             </div>
@@ -147,21 +147,21 @@
             <div class="row">
                 <div class="col-md-6 pb20">
                     <div class="pc-about osLight">팀 이름</div>
-                    <div class="pb20">알스 아망디(내용)</div>
+                    <div class="pb20"><%= @pfid.team_name %></div>
                 </div>
         
             
 
                 <div class="col-md-6 pb20">
                     <div class="pc-about osLight">장르 </div>
-                    <div class="pb20">장르는 뭐뭐 입니다 (출력)</div>
+                    <div class="pb20"><%= @pfid.team_play %><%= @pfid.team_concert %><%= @pfid.team_classic %><%= @pfid.team_jeonsi %><%= @pfid.team_sport %><%= @pfid.team_amateur %><%= @pfid.team_busking %><%= @pfid.team_etc %></div>
                 </div>
             </div>
             
             <div class="row">
                 <div class="col-md-6 pb20">
                     <div class="pc-about osLight">주로 공연하는 지역 </div>
-                    <div class="pb20">어디어디  (내용)</div>
+                    <div class="pb20"><%= @pfid.team_play %></div>
                 </div>
                 
                 <div class="col-md-6 pb20">
