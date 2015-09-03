@@ -1706,6 +1706,7 @@ a.card, div.card {
     z-index: 1;
 }
 .figure img {
+    
     position: relative;
     display: block;
     width: 100%;

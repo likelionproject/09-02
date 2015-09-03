@@ -31,7 +31,7 @@ class CultureController < ApplicationController
                 
         hello.pf_address = params[:pf_address]
         hello.pf_address_sub = params[:pf_address_sub]
-        hello.pf_userid = params[:pf_userid]    
+        hello.performanceinfo_id = params[:performanceinfo_id]    
         
         hello.pf_infor = params[:pf_infor]
         hello.pf_add_lat = params[:pf_add_lat]
@@ -58,6 +58,12 @@ class CultureController < ApplicationController
     def explore
         
         @articles = Newpf.all
+        if current_user.nil?
+            @pfid = nil
+        else
+            @pfid = current_user.performanceinfo
+        end
+        
         
     end
     
@@ -82,7 +88,7 @@ class CultureController < ApplicationController
         pid = params[:pid] # 게시글 id
         cid = params[:cid] # 덧글 id
         
-        User.find(pid).comments.find(cid).destroy
+        Newpf.find(pid).comments.find(cid).destroy
         
         redirect_to '/culture/single/' + pid.to_s
     end
@@ -214,6 +220,7 @@ class CultureController < ApplicationController
     
     def profile
         
+        @articles = Newpf.where(:performanceinfo_id => params[:id])
         @pfid = Performanceinfo.find(params[:id])
         
     end

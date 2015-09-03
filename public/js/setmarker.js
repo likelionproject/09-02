@@ -199,6 +199,14 @@
               });
         });
         
+        $('#place_search').change(function(){
+            $.getJSON("https://maps.googleapis.com/maps/api/geocode/json?address="+$('#place_search').val(), 
+                function(data, result){
+                    map.setCenter(new google.maps.LatLng(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng));
+                    map.setZoom(14);
+                });
+        });
+        
         map.mapTypes.set('Styled', styledMapType);
         map.setCenter(new google.maps.LatLng(37.545087, 126.987403));   // 기본 화면 center 설정
         map.setZoom(11);

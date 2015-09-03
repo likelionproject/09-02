@@ -161,12 +161,12 @@
             <div class="row">
                 <div class="col-md-6 pb20">
                     <div class="pc-about osLight">주로 공연하는 지역 </div>
-                    <div class="pb20"><%= @pfid.team_play %></div>
+                    <div class="pb20"><%= @pfid.team_loca %></div>
                 </div>
                 
                 <div class="col-md-6 pb20">
                     <div class="pc-about osLight"> SNS </div>
-                    <div class="pb20"><div class="pc-social"><a href="#" class="btn btn-icon btn-facebook"><span class="fa fa-facebook"></span></a> <a href="#" class="btn btn-icon btn-twitter"><span class="fa fa-twitter"></span></a> <a href="#" class="btn btn-icon btn-google"><span class="fa fa-google-plus"></span></a> <a href="#" class="btn btn-icon btn-pinterest"><span class="fa fa-pinterest"></span></a></div></div>
+                    <div class="pb20"><div class="pc-social"><a href="<%= @pfid.team_fb %>" class="btn btn-icon btn-facebook"><span class="fa fa-facebook"></span></a> <a href="<%= @pfid.team_tw %>" class="btn btn-icon btn-twitter"><span class="fa fa-twitter"></span></a> <a href="<%= @pfid.team_blog %>" class="btn btn-icon btn-google"><span class="fa fa-google-plus"></span></a></div></div>
                 </div>
                 
             </div>
@@ -175,7 +175,7 @@
             <div class="row">
                 <div class="col-md-12 pb20">
                     <div class="pc-about osLight">팀 소개</div>
-                    <div class="pb20"> 한양대학교 동아리로 7년 됬어요 (내용) 멤버는 누구누구누구 있습니다 ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ</div>
+                    <div class="pb20"> <%= @pfid.team_info %></div>
                 </div>
             </div>
             <a href="/culture/pf_update/<%= @pfid.id %>" class="btn btn-round btn-primary">수정</a>
@@ -185,16 +185,17 @@
         <div class="rightContainer">
             <h3>이전 공연</h3>
             <div class="row">
+                <% @pfid.newpfs.each do |p| %>
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <a href="/culture/single" class="card">
+                    <a href="/culture/single/<%=p.id%>" class="card">
                         <div class="figure">
-                            <img src="/images/prop/2-1.png" alt="image">
+                            <img src="<%=p.pf_image%>" alt="image" width="200px" height="200px">
                             <div class="figView"><span class="icon-eye"></span></div>
                             <div class="figType">공연 종료</div>
                         </div>
                         
-                        <h2>Ars-Amandi 6번째 정기공연</h2>
-                        <div class="cardAddress"><span class="icon-pointer"></span> 한양대학교 노천극장</div>
+                        <h2><%=p.pf_title%></h2>
+                        <div class="cardAddress"><span class="icon-pointer"></span><%=p.pf_address_sub%></div>
                         <div class="cardRating">
                             <span class="fa fa-star"></span>
                             <span class="fa fa-star"></span>
@@ -206,75 +207,7 @@
                         <div class="clearfix"></div>
                     </a>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <a href="/culture/single" class="card">
-                        <div class="figure">
-                            <img src="/images/prop/2-1.png" alt="image">
-                            <div class="figView"><span class="icon-eye"></span></div>
-                            <div class="figType">공연 종료</div>
-                        </div>
-                        
-                        <h2>공연 이름</h2>
-                        <div class="cardAddress"><span class="icon-pointer"></span> 공연 장소 짤막하게</div>
-                        <div class="cardRating">
-                            <!--공연 평점-->
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <!--공연 리플수-->
-                            (123)
-                        </div>
-                        <div class="clearfix"></div>
-                    </a>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <a href="/culture/single" class="card">
-                        <div class="figure">
-                            <img src="/images/prop/2-1.png" alt="image">
-                            <div class="figView"><span class="icon-eye"></span></div>
-                            <div class="figType">공연 종료</div>
-                        </div>
-                        
-                        <h2>공연 이름</h2>
-                        <div class="cardAddress"><span class="icon-pointer"></span> 공연 장소 짤막하게</div>
-                        <div class="cardRating">
-                            <!--공연 평점-->
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <!--공연 리플수-->
-                            (123)
-                        </div>
-                        <div class="clearfix"></div>
-                    </a>
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <a href="/culture/single" class="card">
-                        <div class="figure">
-                            <img src="/images/prop/2-1.png" alt="image">
-                            <div class="figView"><span class="icon-eye"></span></div>
-                            <div class="figType">공연 종료</div>
-                        </div>
-                        
-                        <h2>공연 이름</h2>
-                        <div class="cardAddress"><span class="icon-pointer"></span> 공연 장소 짤막하게</div>
-                        <div class="cardRating">
-                            <!--공연 평점-->
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <!--공연 리플수-->
-                            (123)
-                        </div>
-                        <div class="clearfix"></div>
-                    </a>
-                </div>
+                <% end %>
             </div>
             
             <!--밑에 오른쪽 공연정보 페이지 넘기는거-->
@@ -310,19 +243,27 @@
 </div>
 
 <!--모달 종료-->
-
+<script type='text/javascript'>
+$(document).ready(function(){
+    $.when(
+        $.getScript('/js/jquery-ui.min.js'),
+        $.getScript('/js/jquery-ui-touch-punch.js'),
+        $.getScript('/js/bootstrap-datepicker.js'),
+        $.getScript('/js/jquery.placeholder.js'),
+        $.getScript('/js/jquery.touchSwipe.min.js'),
+        $.getScript('/js/jquery.slimscroll.min.js'),
+        $.getScript('/js/jquery.tagsinput.min.js'),
+        $.getScript('/js/json2.js'),
+        $.getScript('/js/underscore.js'),
+        $.getScript('/js/moment-2.5.1.js'),
+        $.getScript('/js/jquery.visible.js'),
+        $.Deferred(function( deferred ){
+              $( deferred.resolve );
+        })
+    ).done(function(){
+        <%= render :partial => 'culture/js/_app.js' %>
+    });
     
-<script src="/js/json2.js"></script>
-<script src="/js/bootstrap-datepicker.js"></script>
-<script src="/js/underscore.js"></script>
-<script src="/js/moment-2.5.1.js"></script>
-<script src="/js/jquery-ui.min.js"></script>
-<script src="/js/jquery-ui-touch-punch.js"></script>
-<script src="/js/jquery.placeholder.js"></script>
-<script src="/js/jquery.touchSwipe.min.js"></script>
-<script src="/js/jquery.slimscroll.min.js"></script>
-<script src="/js/jquery.visible.js"></script>
-<script src="/js/clndr.js"></script>
-<script src="/js/jquery.tagsinput.min.js"></script>
-<script src="/js/calendar.js"></script>
-<script src="/js/app.js"></script>
+});
+    
+</script>

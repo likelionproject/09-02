@@ -137,7 +137,7 @@
                         window.location.replace("http://alone-likelionproject.c9.io/culture/pfupload");
                     </script>
                 <% else %>
-                    <input type="hidden" name="pf_userid" value="<%= current_user.performanceinfo.id %>">
+                    <input type="hidden" name="performanceinfo_id" value="<%= current_user.performanceinfo.id %>">
                 <% end %>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
@@ -255,6 +255,7 @@ $(document).ready(function(){
         $.getScript('/js/json2.js'),
         $.getScript('/js/moment-2.5.1.js'),
         $.getScript('/js/fileinput.min.js'),
+        $.getScript('/js/bootstrap-datepicker.js'),
         $.getScript('/js/add_check.js'),
         $.Deferred(function( deferred ){
               $( deferred.resolve );
@@ -264,5 +265,4 @@ $(document).ready(function(){
     });
 });
 </script>
-<script src='/js/bootstrap-datepicker.js'></script>
 

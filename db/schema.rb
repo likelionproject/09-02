@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20150828062454) do
     t.string  "pf_image"
     t.date    "pf_date"
     t.string  "pf_time"
-    t.integer "pf_userid"
+    t.integer "performanceinfo_id"
     t.string  "musical"
     t.string  "play"
     t.string  "concert"
@@ -65,14 +65,6 @@ ActiveRecord::Schema.define(version: 20150828062454) do
     t.string   "team_etc"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-  end
-
-  create_table "replies", force: :cascade do |t|
-    t.integer  "comment_id"
-    t.integer  "user_id"
-    t.string   "context"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

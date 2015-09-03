@@ -174,7 +174,7 @@
                             </div>
                             <div class="clearfix"></div><br>
                             <% unless current_user.nil? %>
-                                <% if current_user.id === @pid.pf_userid || current_user.typenum == 2 %>
+                                <% if current_user.id === @pid.performanceinfo_id || current_user.typenum == 2 %>
                                     <a href="/culture/add_update/<%= @pid.id %>" class="btn btn-round btn-primary">수정</a>
                                     <a href="#" data-toggle="modal" data-target="#remove_alert" class="btn btn-round btn-danger">삭제</a>
                                 <% end %>
@@ -190,13 +190,13 @@
                     <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="agentAvatar summaryItem">
                             <div class="clearfix"></div>
-                            <% if Performanceinfo.find(@pid.pf_userid).team_pic.nil? %>
+                            <% if Performanceinfo.find(@pid.performanceinfo_id).team_pic.nil? %>
                                 <img class="avatar agentAvatarImg" src="/images/avatar-1.png" alt="avatar">
                             <% else %>
-                                <img class="avatar agentAvatarImg" src="<%= Performanceinfo.find(@pid.pf_userid).team_pic %>" alt="avatar">
+                                <img class="avatar agentAvatarImg" src="<%= Performanceinfo.find(@pid.performanceinfo_id).team_pic %>" alt="avatar">
                             <% end %>
-                            <div class="agentName"><%=Performanceinfo.find(@pid.pf_userid).team_name%></div>
-                            <a href="/culture/profile/<%=@pid.pf_userid%>" class="btn btn-lg btn-round btn-green contactBtn">아티스트 자세히 보기</a>
+                            <div class="agentName"><%=Performanceinfo.find(@pid.performanceinfo_id).team_name%></div>
+                            <a href="/culture/profile/<%=@pid.performanceinfo_id%>" class="btn btn-lg btn-round btn-green contactBtn">아티스트 자세히 보기</a>
                         </div>
                     </div>
                 </div>
@@ -326,75 +326,33 @@
         
         <div class="comments">
             <h3><span><%= @pid.comments.count %></span> 후기 모음</h3>
+            <div class="comment">
+            </div>
             <% @pid.comments.each do |c| %>
             
-            <div class="comment">
-                <div class="commentAvatar">
-                    <img class="avatar" src="/images/avatar-3.png" alt="avatar">
-                    <div class="commentArrow"><span class="fa fa-caret-left"></span></div>
-                </div>
-                <div class="commentContent">
-                    <div class="commentName"><%= User.find(c.user_id).username %></div>
-                    <div class="commentBody">
-                        <%= c.context %>
+                <div class="comment">
+                    <div class="commentAvatar">
+                        <img class="avatar" src="/images/avatar-3.png" alt="avatar">
+                        <div class="commentArrow"><span class="fa fa-caret-left"></span></div>
                     </div>
-                    <div class="commentActions">
-                        <div class="commentTime"><span class="icon-clock"></span> <%= c.updated_at.to_formatted_s(:db) %></div>
-                        <ul>
-                            <li><a href="#"><span class="icon-action-undo"></span></a></li> <!-- comment 답글 -->
-                            <li><a href="/culture/comment_destory/pid=<%=@pid.id%>&cid=<%= c.id %>"><span class="fa fa-trash-o"></span></a></li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <% if c.replies.count != 0 %>
-                    <% c.replies.each do |r| %>
-                        <div class="comment reply">
-                            <div class="commentAvatar">
-                                <img class="avatar" src="/images/avatar-3.png" alt="avatar">
-                                <div class="commentArrow"><span class="fa fa-caret-left"></span></div>
-                            </div>
-                            <div class="commentContent">
-                                <div class="commentName"><%= User.find(r.user_id).username %></div>
-                                <div class="commentBody">
-                                    <%= r.context %>
-                                </div>
-                                <div class="commentActions">
-                                    <div class="commentTime"><span class="icon-clock"></span> 1 일 전</div>
-                                    <ul>
-                                        <li><a href="#"><span class="icon-action-undo"></span></a></li> <!-- comment 답글 -->
-                                        <li><a href="/culture/reply_destory/pid=<%=p.id%>&cid=<%=c.id%>&rid=<%= r.id %>"><span class="fa fa-trash-o"></span></a></li>
-                                    </ul>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
+                    <div class="commentContent">
+                        <div class="commentName"><%= User.find(c.user_id).username %></div>
+                        <div class="commentBody">
+                            <%= c.context %>
                         </div>
-                    <% end %>
-                <% end %>
-            </div>
+                        <div class="commentActions">
+                            <div class="commentTime"><span class="icon-clock"></span> <%= c.updated_at.to_formatted_s(:db) %></div>
+                            <ul>
+                                <li><a href="#"><span class="icon-action-undo"></span></a></li> <!-- comment 답글 -->
+                                <li><a href="/culture/comment_destory/?pid=<%=@pid.id%>&cid=<%= c.id %>"><span class="fa fa-trash-o"></span></a></li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
             <% end %>
-            <!--댓글의 댓글-->
-            <div class="comment reply">
-                <div class="commentAvatar">
-                    <img class="avatar" src="/images/avatar-1.png" alt="avatar">
-                    <div class="commentArrow"><span class="fa fa-caret-left"></span></div>
-                </div>
-                <div class="commentContent">
-                    <div class="commentName">Ars-Amandi</div>
-                    <div class="commentBody">
-                        좋게 봐주셔서 너무 감사합니다!
-                    </div>
-                    <div class="commentActions">
-                        <div class="commentTime"><span class="icon-clock"></span> 2 시간 전</div>
-                        <ul>
-                            <li><a href="#"><span class="fa fa-trash-o"></span></a></li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
+        </div>
             
             
         </div>
@@ -410,6 +368,7 @@
             <div class="input-group">
                 <% if current_user.nil? %>
                     <input type="text" name="context" class="form-control" placeholder="로그인 후 후기를 남겨주세요!">
+                    <span class="input-group-btn"><button class="btn btn-green">Post</button></span>
                 <% else %>
                     <input type="hidden" name="newpf_id" value="<%=@pid.id%>">
                     <input type="hidden" name="user_id" value="<%=current_user.id%>">

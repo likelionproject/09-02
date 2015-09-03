@@ -14,7 +14,7 @@ class CreateNewpfs < ActiveRecord::Migration
       t.date :pf_date       # 날짜
       t.string :pf_time     # 시간
       
-      t.integer :pf_userid  # 글쓴이의 user_id
+      t.integer :performanceinfo_id # 공연팀 프로필 id
       
       t.string :musical
       t.string :play
