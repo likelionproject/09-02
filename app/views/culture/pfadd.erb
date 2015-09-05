@@ -18,26 +18,41 @@
     
     <!--맨위에 알람하고 사용자 설정-->
     <div class="headerUserWraper">
-        <a href="#" class="userHandler dropdown-toggle" data-toggle="dropdown"><span class="icon-user"></span><span class="counter">5</span></a>
-        <a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
-            <img class="avatar headerAvatar pull-left" src="/images/avatar-1.png" alt="avatar">
-            <div class="userTop pull-left">
-                <span class="headerUserName">사용자 이름</span> <span class="fa fa-angle-down"></span>
+        <% if current_user.nil? %>
+            <a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
+                <img class="avatar headerAvatar pull-left" src="/images/avatar-1.png" alt="avatar">
+                <div class="userTop pull-left">
+                    <span class="headerUserName">로그인</span> <span class="fa fa-angle-down"></span>
+                </div>
+                <div class="clearfix"></div>
+            </a>
+        <% else %>
+            <a href="#" class="userHandler dropdown-toggle" data-toggle="dropdown"><span class="icon-user"></span><span class="counter">5</span></a>
+            <a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
+                <img class="avatar headerAvatar pull-left" src="/images/avatar-1.png" alt="avatar">
+                <div class="userTop pull-left">
+                    <span class="headerUserName"><%= current_user.username %></span> <span class="fa fa-angle-down"></span>
+                </div>
+                <div class="clearfix"></div>
+            </a>
+            <div class="dropdown-menu pull-right userMenu" role="menu">
+                <div class="mobAvatar">
+                    <img class="avatar mobAvatarImg" src="/images/avatar-1.png" alt="avatar">
+                    <div class="mobAvatarName">사용자 이름</div>
+                </div>
+                <ul>
+                    <li><a href="#"><span class="icon-settings"></span>설정</a></li>
+                    <% if @pfid.nil? %>
+                        <li><a href="/culture/pfupload"><span class="icon-user"></span>프로필</a></li>
+                    <% else %>
+                        <li><a href="/culture/profile/<%= @pfid.id %>"><span class="icon-user"></span>프로필</a></li>
+                    <% end %>
+                    
+                    <li class="divider"></li>
+                    <li><%= link_to "로그아웃", destroy_user_session_path %></li>
+                </ul>
             </div>
-            <div class="clearfix"></div>
-        </a>
-        <div class="dropdown-menu pull-right userMenu" role="menu">
-            <div class="mobAvatar">
-                <img class="avatar mobAvatarImg" src="/images/avatar-1.png" alt="avatar">
-                <div class="mobAvatarName">사용자 이름</div>
-            </div>
-            <ul>
-                <li><a href="#"><span class="icon-settings"></span>설정</a></li>
-                <li><a href="profile.html"><span class="icon-user"></span>프로필</a></li>
-                <li class="divider"></li>
-                <li><a href="#"><span class="icon-power"></span>로그아웃</a></li>
-            </ul>
-        </div>
+        <% end %>
     </div>
     <!--맨위에 알람하고 사용자 설정 끝-->
     
@@ -93,11 +108,12 @@
             <input type="text" placeholder="장소 검색">
             <div class="clearfix"></div>
         </div>
+        
         <ul>
-            <li><a href="/culture/explore"><span class="navIcon icon-compass"></span><span class="navLabel">공연<br>모아보기</span></a></li>
-            <li><a href="/culture/pfadd"><span class="navIcon icon-home"></span><span class="navLabel">공연자<br>모아보기</span></a></li>
-            <li><a href="/culture/add"><span class="navIcon icon-plus"></span><span class="navLabel">공연 등록</span></a></li>
-            <li><a href="/culture/pfupload"><span class="navIcon icon-link"></span><span class="navLabel">공연자 등록</span></a></li>
+            <li><a href="/culture/explore"><span class="navIcon icon-playlist"></span><span class="navLabel">공연 보기</span></a></li>
+            <li><a href="/culture/pfadd"><span class="navIcon icon-users"></span><span class="navLabel">공연자 보기</span></a></li>
+            <li><a href="/culture/add"><span class="navIcon icon-pin"></span><span class="navLabel">공연 등록</span></a></li>
+            <li><a href="/culture/pfupload"><span class="navIcon icon-user-follow"></span><span class="navLabel">공연자 등록</span></a></li>
         </ul>
     </nav>
 </div>
@@ -125,15 +141,16 @@
                 <div class="row">
                     <div class="tabsContainer">
                         <ul class="nav nav-tabs nav-justified" role="tablist">
-                            <li class="active"><a href="#home" role="tab" data-toggle="tab"><span class="fa fa-group"></span> 뮤지컬</a></li>
-                            <li><a href="#profile" role="tab" data-toggle="tab"><span class="icon-user"></span> 연극</a></li>
+                            
+                            <li class="active"><a href="#home" role="tab" data-toggle="tab"><span class="icon-music-tone-alt"></span> 뮤지컬</a></li>
+                            <li><a href="#profile" role="tab" data-toggle="tab"><span class="icon-vector"></span> 연극</a></li>
                             <li><a href="#notifications" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-headphones"></span> 콘서트</a></li>
                             <li><a href="#notifications" role="tab" data-toggle="tab"><span class="fa fa-bank"></span> 클래식 무용</a></li>
                             <li><a href="#notifications" role="tab" data-toggle="tab"><span class="icon-trophy"></span> 전시</a></li>
                             <li><a href="#notifications" role="tab" data-toggle="tab"><span class="fa fa-futbol-o"></span> 스포츠</a></li>
                             <li><a href="#notifications" role="tab" data-toggle="tab"><span class="icon-music-tone"></span> 버스킹</a></li>
                             <li><a href="#notifications" role="tab" data-toggle="tab"><span class="icon-heart"></span> 아마추어동아리</a></li>
-                            <li><a href="#notifications" role="tab" data-toggle="tab"><span class="icon-bubbles"></span> 기타</a></li>
+                            <li><a href="#notifications" role="tab" data-toggle="tab"><span class="fa fa-angellist"></span> 기타</a></li>
                         </ul>
                     </div>
                 </div>
@@ -145,8 +162,9 @@
 
                         <div class="form-group">
                             <div class="col-sm-10">
+                                <br>
                                 <div class="input-group">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" placeholder="공연자의 이름을 입력하세요">
                                     <span class="input-group-btn">
                                         <a href="#" class="btn btn-green">검색하기</a>
                                     </span>
@@ -180,9 +198,8 @@
        <!--오른쪽 사진과 짤막한 공연정보 사이드바-->
         <div class="resultsList">
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                    
-                    <% @pfid.reverse.each do |x| %>
+                <% @pf.reverse.each do |x| %>
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
                         <a href="/culture/profile/<%= x.id %>" class="card">
                         <div class="figure">
                             <!--공연자 사진 들어갈것-->
@@ -204,8 +221,8 @@
                         </div>
                         <div class="clearfix"></div>
                         </a>
-                    <% end %>
-                </div>
+                    </div>
+                <% end %>
             </div>
             <!--오른쪽 사이드바 공연 사진 설명 끝-->
             

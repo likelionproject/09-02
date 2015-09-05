@@ -7,16 +7,7 @@ class CultureController < ApplicationController
         end
     end
     
-    def enroll_result
-       
-       @subject = params[:subject]
-       @user_name = params[:user_name]
-       @datepicker = params[:datepicker]
-       @lat = params[:lat]
-       @lng = params[:lng]
-     
-    end
-    
+    # 공연 등록 창
     def add
         if current_user.nil?
            redirect_to '/' 
@@ -54,7 +45,8 @@ class CultureController < ApplicationController
         redirect_to '/culture/explore'
     
     end
-
+    
+    # 공연 모아보기
     def explore
         
         @articles = Newpf.all
@@ -64,16 +56,35 @@ class CultureController < ApplicationController
             @pfid = current_user.performanceinfo
         end
         
-        
     end
     
+    # 공연 단일 단위
     def single          
        
        @pid = Newpf.find(params[:id])
-        
+       @pfid = Performanceinfo.find(@pid.performanceinfo_id)
+       
     end
     
-    #댓글
+    # 공연 좋아요 기능
+    def single_like
+        @post = Newpf.find(params[:pid])
+        if current_user.nil?
+            redirect_to '/'
+        else
+            @user = current_user
+            if @user.voted_up_on? @post
+                @post.unliked_by @user
+                redirect_to '/culture/single/' + @post.id.to_s
+            else
+                @post.liked_by @user
+                redirect_to '/culture/single/' + @post.id.to_s
+            end
+        end
+
+    end
+    
+    # 덧글
     def comment_post
        c = Comment.new
        c.newpf_id = params[:newpf_id]
@@ -84,6 +95,7 @@ class CultureController < ApplicationController
        redirect_to '/culture/single/' + c.newpf_id.to_s
     end
     
+    # 덧글 삭제
     def comment_destory
         pid = params[:pid] # 게시글 id
         cid = params[:cid] # 덧글 id
@@ -93,25 +105,8 @@ class CultureController < ApplicationController
         redirect_to '/culture/single/' + pid.to_s
     end
     
-    #대댓글
-    def reply_post
-        pid = params[:newpf_id]
-        r = Reply.new
-        r.comment_id = params[:comment_id]
-        r.user_id = params[:user_id]
-        r.context = params[:context]
-        r.save
-        
-        redirect_to '/culture/single/' + pid.to_s
-    end
     
-    def reply_destory
-        Reply.find(rid).destroy
-        redirect_to '/culture/single/' + pid.to_s
-    end
-    
-    
-    
+    # 공연 수정 화면 출력
     def add_update
         if current_user.nil?
            redirect_to '/' 
@@ -121,6 +116,7 @@ class CultureController < ApplicationController
         
     end
     
+    # 공연 수정
     def add_update_1
         if current_user.nil?
            redirect_to '/' 
@@ -173,22 +169,21 @@ class CultureController < ApplicationController
     def search
     end
     
+    # 공연팀 출력
     def pfadd
-        
-        @pfid = Performanceinfo.all
+        @pf = Performanceinfo.all
+        @pfid = current_user
         
     end
-    
-    def confirm_team_name
-       
-    end
-    
+
+    # 공연팀 등록화면
     def pfupload
        unless current_user.performanceinfo.nil?
            redirect_to '/'
        end
     end
     
+    # 공연팀 등록
     def outputsave_1
         hello = Performanceinfo.new
         hello.user_id = params[:team_user_id]
@@ -218,6 +213,7 @@ class CultureController < ApplicationController
         
     end
     
+    # 공연팀 단일 단위 출력
     def profile
         
         @articles = Newpf.where(:performanceinfo_id => params[:id])
@@ -226,13 +222,14 @@ class CultureController < ApplicationController
     end
     
     
-    
+    # 공연팀 수정 화면
     def pf_update
         
         @pfid = Performanceinfo.find(params[:id])
         
     end
     
+    #공연팀 수정
     def pf_update_1
         
         @pfid = Performanceinfo.find(params[:id])
@@ -262,6 +259,7 @@ class CultureController < ApplicationController
         redirect_to '/culture/pfadd'
     end
     
+    # 공연팀 삭제
     def pf_delete
         
         @pfid = Performanceinfo.find(params[:id])
@@ -271,4 +269,5 @@ class CultureController < ApplicationController
         redirect_to '/culture/pfadd'
         
     end
+
 end
