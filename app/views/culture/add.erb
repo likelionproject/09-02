@@ -26,7 +26,7 @@
     <!--맨위에 알람하고 사용자 설정-->
     <div class="headerUserWraper">
         <% if current_user.nil? %>
-            <a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
+            <a href="#" class="headerUser dropdown-toggle" data-toggle="modal" data-target="#signin">
                 <img class="avatar headerAvatar pull-left" src="/images/avatar-1.png" alt="avatar">
                 <div class="userTop pull-left">
                     <span class="headerUserName">로그인</span> <span class="fa fa-angle-down"></span>
@@ -145,7 +145,7 @@
 
         <div class="rightContainer">
             <h1>공연 등록하기</h1>
-            <form name='input_form' id='input_form' role="form" action="/culture/outputsave" method="POST" enctype="multipart/form-data" >
+            <form name='input_form' id='input_form' role="form" action="/culture/outputsave" method="POST" enctype="multipart/form-data">
                 <% if current_user.performanceinfo.nil? %>
                     <script>
                         alert("공연자 정보를 먼저 등록해주세요. ");
@@ -158,7 +158,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="form-group">
                             <label>공연 이름</label>
-                            <input type="string" class="form-control" name="pf_title" placeholder="간략한 공연의 대표 제목을 써주세요">
+                            <input type="string" class="form-control" name="pf_title" placeholder="간략한 공연 제목을 써주세요" required>
                         </div>
                     </div>
                 </div>
@@ -169,7 +169,7 @@
                             <label>시작 시간</label>
                             <div class="input-group bootstrap-timepicker timepicker">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                                <input id="timepicker1" type="text" class="form-control input-small" name="pf_time">
+                                <input id="timepicker1" type="text" class="form-control input-small" name="pf_time_start">
                             </div>
                             <script>
                                 $('#timepicker1').timepicker();    
@@ -181,10 +181,10 @@
                             <label>종료 시간</label>
                             <div class="input-group bootstrap-timepicker timepicker">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                                <input id="timepicker1" type="text" class="form-control input-small" name="pf_time">
+                                <input id="timepicker2" type="text" class="form-control input-small" name="pf_time_end">
                             </div>
                             <script>
-                                $('#timepicker1').timepicker();    
+                                $('#timepicker2').timepicker();    
                             </script>
                         </div>
                     </div>
@@ -211,7 +211,7 @@
                     <br>
                     <div class="form-group" placeholder="공연 세부 설명">
                         <label>공연 설명</label>
-                        <textarea class="form-control" rows="4" name="pf_infor"></textarea>
+                        <textarea class="form-control" rows="4" name="pf_infor" required></textarea>
                     </div>
                     <br>
             
@@ -225,7 +225,7 @@
                 <div class="form-group" placeholder="홍대 역 3번출구 앞">
                     <label>간략한 장소 설명</label>
                     <div class="input-group">
-                        <input class="form-control" type="text" name="pf_add_br">
+                        <input class="form-control" type="text" name="pf_add_br" required>
                     </div>
                 </div>
                 <br>
@@ -234,8 +234,8 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="form-group">
                             <label>사진 올리기</label>
-                            <input type="file" class="file" name="pf_image" multiple data-show-upload="false" data-show-caption="false" data-show-remove="false" accept="image/jpeg,image/png" data-browse-class="btn btn-o btn-default" data-browse-label="사진 찾기">
-                            <p class="help-block">하나의 이미지만 업로드 됩니다</p>
+                            <input type="file" class="file" name="pf_image" multiple data-show-upload="false" data-show-caption="false" data-show-remove="false" accept="image/jpeg,image/png" data-browse-class="btn btn-o btn-default" data-browse-label="사진 찾기" required>
+                            <p class="help-block">이미지 업로드는 필수 입니다</p>
                         </div>
                     </div>
                 </div>
@@ -276,6 +276,49 @@
     </div>
     <div class="clearfix"></div>
 </div>
+
+<!--로그인 팝업 뜨는거 -->
+<div class="modal fade" id="signin" role="dialog" aria-labelledby="signinLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="signinLabel">로그인</h4>
+            </div>
+            <div class="modal-body">
+                
+              <%= form_for(resource, as: resource_name, url: session_path(resource_name), role: "form") do |f| %>
+                <div class="field">
+                  <div class="form-group">
+                    <%= f.text_field :username, autofocus: true, placeholder: "아이디", class: "form-control"  %>
+                  </div>
+                </div>
+              
+                <div class="field">
+                  <div class="form-group">
+                    <%= f.password_field :password, autocomplete: "off", placeholder: "비밀번호", class: "form-control" %>
+                  </div>
+                </div>
+              
+                <% if devise_mapping.rememberable? -%>
+                  <div class="field">
+                    <div class="form-group">
+                      <%= f.check_box :remember_me %>
+                      <%= f.label :remember_me %>
+                    </div>
+                  </div>
+                <% end %>
+              
+                <div class="actions">
+                  <div class="form-group">
+                    <%= f.submit "로그인", class: "btn btn-lg btn-green", style: "width: 100%" %>
+                  </div>
+                </div>
+              <% end %>             
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
 $(document).ready(function(){
     $.when(

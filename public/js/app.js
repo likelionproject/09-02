@@ -190,41 +190,7 @@
         allowPageScroll: true,
         disableFadeOut: false
     });
-
-    $('.progress-bar[data-toggle="tooltip"]').tooltip();
-    $('.tooltipsContainer .btn').tooltip();
-
-    $("#slider1").slider({
-        range: "min",
-        value: 50,
-        min: 1,
-        max: 100,
-        slide: repositionTooltip,
-        stop: repositionTooltip
-    });
-    $("#slider1 .ui-slider-handle:first").tooltip({ title: $("#slider1").slider("value"), trigger: "manual"}).tooltip("show");
-
-    $("#slider2").slider({
-        range: "max",
-        value: 70,
-        min: 1,
-        max: 100,
-        slide: repositionTooltip,
-        stop: repositionTooltip
-    });
-    $("#slider2 .ui-slider-handle:first").tooltip({ title: $("#slider2").slider("value"), trigger: "manual"}).tooltip("show");
-
-    $("#slider3").slider({
-        range: true,
-        min: 0,
-        max: 500,
-        values: [ 190, 350 ],
-        slide: repositionTooltip,
-        stop: repositionTooltip
-    });
-    $("#slider3 .ui-slider-handle:first").tooltip({ title: $("#slider3").slider("values", 0), trigger: "manual"}).tooltip("show");
-    $("#slider3 .ui-slider-handle:last").tooltip({ title: $("#slider3").slider("values", 1), trigger: "manual"}).tooltip("show");
-
+    
     $('#autocomplete').autocomplete({
         source: ["ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme"],
         focus: function (event, ui) {

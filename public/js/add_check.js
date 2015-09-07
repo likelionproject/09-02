@@ -12,8 +12,8 @@ $(document).ready(function(){
 function chkcontrol(j) {
     var total=0;
     for(var i=0; i < ckb.length; i++){
-        if(total > 3){
-            alert("공연 카테고리는 3개의 장르만 선택가능합니다.") 
+        if(total > 1){
+            alert("공연 카테고리는 1개의 장르만 선택가능합니다.") 
             ckb[j].checked = false ;
             return false;
         }
@@ -23,8 +23,6 @@ function chkcontrol(j) {
   
     }
 } 
-
-
 
 function delalert(){
   alert("정말로 삭제하겠습니까?") 

@@ -19,7 +19,7 @@
     <!--맨위에 알람하고 사용자 설정-->
     <div class="headerUserWraper">
         <% if current_user.nil? %>
-            <a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
+            <a href="#" class="headerUser dropdown-toggle" data-toggle="modal" data-target="#signin">
                 <img class="avatar headerAvatar pull-left" src="/images/avatar-1.png" alt="avatar">
                 <div class="userTop pull-left">
                     <span class="headerUserName">로그인</span> <span class="fa fa-angle-down"></span>
@@ -133,6 +133,7 @@
         <div class="filter">
             <!--필터 위아래 되는거 -->
             <a href="#" class="handleFilter"><span class="icon-equalizer"></span></a>
+            
             <div class="clearfix"></div>
             
             <!--공연 장르 필터 시작-->
@@ -207,18 +208,11 @@
                             <div class="figView"><span class="icon-eye"></span></div>
                         </div>
                         <h2> <%= x.team_name %> </h2>
-                        <div class="cardAddress"><span class="icon-pointer"></span><%= x.team_loca %></div>
-                        <div class="cardAddress"><%= x.team_musical %><%= x.team_play %><%= x.team_concert %><%= x.team_classic %><%= x.team_jeonsi %><%= x.team_sport %><%= x.team_busking %><%= x.team_amateur %><%= x.team_etc %></div>
+                        <br>
+                        <div class="cardAddress"><span class="glyphicon glyphicon-zoom-in"></span> <%= x.team_loca %></div>
+                        <div class="cardAddress"><span class="fa fa-star-o"></span> 장르: <%= x.team_musical %><%= x.team_play %><%= x.team_concert %><%= x.team_classic %><%= x.team_jeonsi %><%= x.team_sport %><%= x.team_busking %><%= x.team_amateur %><%= x.team_etc %></div>
                         <!--별점-->
-                        <div class="cardRating">
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star-o"></span>
-                            <!--댓글수 -->
-                            (146) 
-                        </div>
+                        
                         <div class="clearfix"></div>
                         </a>
                     </div>
@@ -242,6 +236,49 @@
     <div class="clearfix"></div>
 </div>
 <!--오른쪽 사이드바 끝-->
+
+<!--로그인 팝업 뜨는거 -->
+<div class="modal fade" id="signin" role="dialog" aria-labelledby="signinLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="signinLabel">로그인</h4>
+            </div>
+            <div class="modal-body">
+                
+              <%= form_for(resource, as: resource_name, url: session_path(resource_name), role: "form") do |f| %>
+                <div class="field">
+                  <div class="form-group">
+                    <%= f.text_field :username, autofocus: true, placeholder: "아이디", class: "form-control"  %>
+                  </div>
+                </div>
+              
+                <div class="field">
+                  <div class="form-group">
+                    <%= f.password_field :password, autocomplete: "off", placeholder: "비밀번호", class: "form-control" %>
+                  </div>
+                </div>
+              
+                <% if devise_mapping.rememberable? -%>
+                  <div class="field">
+                    <div class="form-group">
+                      <%= f.check_box :remember_me %>
+                      <%= f.label :remember_me %>
+                    </div>
+                  </div>
+                <% end %>
+              
+                <div class="actions">
+                  <div class="form-group">
+                    <%= f.submit "로그인", class: "btn btn-lg btn-green", style: "width: 100%" %>
+                  </div>
+                </div>
+              <% end %>             
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script type='text/javascript'>
 $(document).ready(function(){

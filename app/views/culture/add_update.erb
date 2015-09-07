@@ -24,7 +24,7 @@
     <!--맨위에 알람하고 사용자 설정-->
     <div class="headerUserWraper">
         <% if current_user.nil? %>
-            <a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
+            <a href="#" class="headerUser dropdown-toggle" data-toggle="modal" data-target="#signin">
                 <img class="avatar headerAvatar pull-left" src="/images/avatar-1.png" alt="avatar">
                 <div class="userTop pull-left">
                     <span class="headerUserName">로그인</span> <span class="fa fa-angle-down"></span>
@@ -147,16 +147,26 @@
                             <input type="string" class="form-control" name="new_pf_title" value="<%= @pid.pf_title %>">
                         </div>
                     </div>
+                    
                     <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                          <div class="form-group">
-                            <label>공연 시간</label>
+                            <label>시작 시간</label>
                             <div class="input-group bootstrap-timepicker timepicker">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                                <input id="timepicker1" type="text" class="form-control input-small" name="new_pf_time" value="<%= @pid.pf_time %>">
+                                <input id="timepicker1" type="text" class="form-control input-small" name="new_pf_time_start" value="<%= @pid.pf_time_start %>">
                             </div>
 
                             <script type="text/javascript">
                                 $('#timepicker1').timepicker();
+                            </script>
+                            <label>종료 시간</label>
+                            <div class="input-group bootstrap-timepicker timepicker">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                <input id="timepicker2" type="text" class="form-control input-small" name="new_pf_time_end" value="<%= @pid.npf_time_end %>">
+                            </div>
+
+                            <script type="text/javascript">
+                                $('#timepicker2').timepicker();
                             </script>
                         </div>
                     </div>
@@ -242,6 +252,49 @@
     </div>
     <div class="clearfix"></div>
 </div>
+
+<!--로그인 팝업 뜨는거 -->
+<div class="modal fade" id="signin" role="dialog" aria-labelledby="signinLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="signinLabel">로그인</h4>
+            </div>
+            <div class="modal-body">
+                
+              <%= form_for(resource, as: resource_name, url: session_path(resource_name), role: "form") do |f| %>
+                <div class="field">
+                  <div class="form-group">
+                    <%= f.text_field :username, autofocus: true, placeholder: "아이디", class: "form-control"  %>
+                  </div>
+                </div>
+              
+                <div class="field">
+                  <div class="form-group">
+                    <%= f.password_field :password, autocomplete: "off", placeholder: "비밀번호", class: "form-control" %>
+                  </div>
+                </div>
+              
+                <% if devise_mapping.rememberable? -%>
+                  <div class="field">
+                    <div class="form-group">
+                      <%= f.check_box :remember_me %>
+                      <%= f.label :remember_me %>
+                    </div>
+                  </div>
+                <% end %>
+              
+                <div class="actions">
+                  <div class="form-group">
+                    <%= f.submit "로그인", class: "btn btn-lg btn-green", style: "width: 100%" %>
+                  </div>
+                </div>
+              <% end %>             
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
 $(document).ready(function(){
     $.when(

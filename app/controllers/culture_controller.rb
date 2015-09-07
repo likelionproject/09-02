@@ -5,6 +5,9 @@ class CultureController < ApplicationController
            #yes
            @user_type = current_user.typenum # 0 => viewer, 1 => performer
         end
+        
+        @popular_pfs = Newpf.all.sort_by{ |post| post.get_likes.size }.take(6).reverse
+        @popular_artists = Performanceinfo.all.sort_by{ |artist| artist.get_likes(:vote_scope => 'interest').size }.take(6).reverse
     end
     
     # 공연 등록 창
@@ -29,7 +32,8 @@ class CultureController < ApplicationController
         hello.pf_add_lng = params[:pf_add_lng]
         hello.pf_image = params[:pf_image]
         hello.pf_date = params[:dt_due]
-        hello.pf_time = params[:pf_time]
+        hello.pf_time_start = params[:pf_time_start]
+        hello.pf_time_end = params[:pf_time_end]
         
         hello.musical = params[:musical]
         hello.play = params[:play]
@@ -49,7 +53,10 @@ class CultureController < ApplicationController
     # 공연 모아보기
     def explore
         
+        # 공연 record 
         @articles = Newpf.all
+        
+        # 세션이 존재하는지 여부 확인
         if current_user.nil?
             @pfid = nil
         else
@@ -83,6 +90,35 @@ class CultureController < ApplicationController
         end
 
     end
+    
+    # 관심아티스트 등록 action
+    def profile_like
+        @performer = Performanceinfo.find(params[:pfid])
+        if current_user.nil?
+            redirect_to '/'
+        else
+            @user = current_user
+            if @user.voted_up_on? @performer, :vote_scope => 'interest'
+                @performer.unliked_by @user, :vote_scope => 'interest'
+                redirect_to '/culture/profile/' + @performer.id.to_s
+            else
+                @performer.liked_by @user, :vote_scope => 'interest'
+                redirect_to '/culture/profile/' + @performer.id.to_s
+            end
+        end
+    end
+    
+    # 관심아티스트 모아보기
+    def interests
+        if current_user.nil?
+            redirect_to '/'
+        else
+            @pfs = current_user.find_liked_items(:vote_scope => 'interest')
+            
+        end
+    end
+    
+    
     
     # 덧글
     def comment_post
@@ -136,6 +172,9 @@ class CultureController < ApplicationController
         @pid.pf_image = params[:new_pf_image]
         @pid.pf_date = params[:new_dt_due]
         @pid.pf_time = params[:new_pf_time]
+        @pid.pf_time_start = params[:new_pf_time_start]
+        @pid.pf_time_end = params[:new_pf_time_end]
+        
         @pid.musical = params[:new_musical]
         @pid.play = params[:new_play]
         @pid.concert = params[:new_concert]

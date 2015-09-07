@@ -32,7 +32,7 @@
     <!--맨위에 알람하고 사용자 설정-->
     <div class="headerUserWraper">
         <% if current_user.nil? %>
-            <a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
+            <a href="#" class="headerUser dropdown-toggle" data-toggle="modal" data-target="#signin">
                 <img class="avatar headerAvatar pull-left" src="/images/avatar-1.png" alt="avatar">
                 <div class="userTop pull-left">
                     <span class="headerUserName">로그인</span> <span class="fa fa-angle-down"></span>
@@ -165,7 +165,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
                         <div class="summaryItem">
                             <h1 class="pageTitle"><%=@pid.pf_title%></h1>
-                            <div class="address"><span class="glyphicon glyphicon-time"></span> <%=@pid.pf_date%> <%=@pid.pf_time%></div>
+                            <div class="address"><span class="glyphicon glyphicon-time"></span> <%=@pid.pf_date%> <%=@pid.pf_time_start%>~<%=@pid.pf_time_end%></div>
                             <div class="address"><span class="icon-pointer"></span> <%=@pid.pf_address %></div>
                             <div class="address"><span class="glyphicon glyphicon-bullhorn"></span> <%= @pid.pf_add_br %></div>
                             <ul class="rating">
@@ -178,7 +178,25 @@
                                 <li>(146)</li>
                             </ul>
                             <!--좋아요 수-->
-                            <div class="favLink"><a href="/culture/single_like/?pid=<%=@pid.id%>"><span class="icon-heart"></span></a><%=@pid.get_likes.size%></div><br>
+                            <div class="favLink">
+                                <a href="#" id="like_vote"><span class="icon-heart"></span></a>
+                                <span id="like_num"><%=@pid.get_likes.size%></span> 
+                                <% unless current_user.nil? %>
+                                    <% if current_user.voted_up_on? @pid %>
+                                        <span>좋아합니다!</span>
+                                    <% end %>
+                                <% end %>
+                            </div><br>
+                            <script>
+                                $(document).ready(function(){
+                                    $("#like_vote").click(function(){
+                                        $.get("/culture/single_like/?pid=<%=@pid.id%>",
+                                            function(data, status){
+                                                location.reload();
+                                        });
+                                    });
+                                });
+                            </script>
                             <div class="likeShare">
                                 <div class="fb-share-button" 
                                     data-href="http://alone-likelionproject.c9.io/culture/single/<%=@pid.id%>" 
@@ -187,9 +205,11 @@
                             </div>
                             <div class="clearfix"></div><br>
                             <% unless current_user.nil? %>
-                                <% if current_user.id === @pid.performanceinfo_id || current_user.typenum == 2 %>
-                                    <a href="/culture/add_update/<%= @pid.id %>" class="btn btn-round btn-primary">수정</a>
-                                    <a href="#" data-toggle="modal" data-target="#remove_alert" class="btn btn-round btn-danger">삭제</a>
+                                <% unless current_user.performanceinfo.nil? %>
+                                    <% if current_user.performanceinfo.id === @pid.performanceinfo_id || current_user.typenum == 2 %>
+                                        <a href="/culture/add_update/<%= @pid.id %>" class="btn btn-round btn-primary">수정</a>
+                                        <a href="#" data-toggle="modal" data-target="#remove_alert" class="btn btn-round btn-danger">삭제</a>
+                                    <% end %>
                                 <% end %>
                             <% else %>
                                  <!-- 로그인 창 -->
@@ -225,17 +245,14 @@
             <h3>아티스트 SNS</h3>
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 shareItem">
-                    <a href="#" class="btn btn-sm btn-round btn-o btn-facebook"><span class="fa fa-facebook"></span> 페이스북</a>
+                    <a href="<%= @pfid.team_fb %>" class="btn btn-sm btn-round btn-o btn-facebook"><span class="fa fa-facebook"></span> 페이스북</a>
                 </div>
 
                 <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 shareItem">
-                    <a href="#" class="btn btn-sm btn-round btn-o btn-twitter"><span class="fa fa-twitter"></span> 트위터</a>
+                    <a href="<%= @pfid.team_tw %>" class="btn btn-sm btn-round btn-o btn-twitter"><span class="fa fa-twitter"></span> 트위터</a>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 shareItem">
-                    <a href="#" class="btn btn-sm btn-round btn-o btn-google"><span class="fa fa-google-plus"></span> 이메일</a>
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 shareItem">
-                    <a href="#" class="btn btn-sm btn-round btn-o btn-pinterest"><span class="fa fa-pinterest"></span> 유투브</a>
+                    <a href="<%= @pfid.team_blog %>" class="btn btn-sm btn-round btn-o btn-google"><span class="fa fa-google-plus"></span> 블로그</a>
                 </div>
             </div>
         </div>
@@ -253,7 +270,7 @@
                         <div class="row">
                          <% @pfid.newpfs.each do |p| %>
                             <div class="col-xs-4">
-                                <div data-linkto="single.html" class="card">
+                                <div data-linkto="<%= p.id %>" class="card">
                                     <div class="figure">
                                         <img src="<%=p.pf_image%>" alt="image" width="200px" height="150px">
                                         <div class="figView"><span class="icon-eye"></span></div>
@@ -346,6 +363,48 @@
             <div class="modal-body">
                 <center><a href="/culture/delete/<%= @pid.id %>"><button type="button" class="btn btn-primary">OK</button></a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button></center>                        
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--로그인 팝업 뜨는거 -->
+<div class="modal fade" id="signin" role="dialog" aria-labelledby="signinLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="signinLabel">로그인</h4>
+            </div>
+            <div class="modal-body">
+                
+              <%= form_for(resource, as: resource_name, url: session_path(resource_name), role: "form") do |f| %>
+                <div class="field">
+                  <div class="form-group">
+                    <%= f.text_field :username, autofocus: true, placeholder: "아이디", class: "form-control"  %>
+                  </div>
+                </div>
+              
+                <div class="field">
+                  <div class="form-group">
+                    <%= f.password_field :password, autocomplete: "off", placeholder: "비밀번호", class: "form-control" %>
+                  </div>
+                </div>
+              
+                <% if devise_mapping.rememberable? -%>
+                  <div class="field">
+                    <div class="form-group">
+                      <%= f.check_box :remember_me %>
+                      <%= f.label :remember_me %>
+                    </div>
+                  </div>
+                <% end %>
+              
+                <div class="actions">
+                  <div class="form-group">
+                    <%= f.submit "로그인", class: "btn btn-lg btn-green", style: "width: 100%" %>
+                  </div>
+                </div>
+              <% end %>             
             </div>
         </div>
     </div>

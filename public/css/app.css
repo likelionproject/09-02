@@ -2492,7 +2492,7 @@ h1.pageTitle {
 
 .propWidget-2 {
     display: block;
-    background-color: #fff;
+    background-color: #FFF;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.13);
     margin-bottom: 20px;
     cursor: pointer;
@@ -2579,7 +2579,7 @@ h1.pageTitle {
 }
 .propWidget-2 .fig h3 {
     font-size: 18px !important;
-    line-height: 20px !important;
+    line-height: 30px !important;
     font-weight: normal !important;
     margin: 0;
     padding: 0 20px 0 20px !important;
@@ -2630,7 +2630,7 @@ h1.pageTitle {
     opacity: 1;
 }
 .propWidget-2 .fig .priceCap {
-    font-size: 25px;
+    font-size: 20px;
     line-height: 30px;
     position: absolute;
     z-index: 5;
@@ -2669,6 +2669,48 @@ h1.pageTitle {
     transition-delay: 0.35s;
     opacity: 1;
 }
+/* like_cap */
+.propWidget-2 .fig .like_cap {
+    font-size: 25px;
+    line-height: 250px;
+    position: absolute;
+    z-index: 5;
+    top: 25%;
+    left: 0%;
+    right: 0%;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    letter-spacing: -1px;
+    overflow: hidden;
+    padding-bottom: 5px;
+}
+.no-touch .propWidget-2 .fig .like_cap {
+    -webkit-transition: -webkit-transform 0.70s;
+    transition: transform 0.70s;
+    -webkit-transform: scale(0, 0);
+    transform: scale(0, 0);
+}
+.no-touch .propWidget-2 .fig .like_cap span {
+    -webkit-transition: -webkit-transform 0.35s, opacity 0.15s;
+    transition: transform 0.35s, opacity 0.15s;
+    -webkit-transform: translate3d(0,50px,0);
+    transform: translate3d(0,50px,0);
+    opacity: 0;
+}
+.no-touch .propWidget-2:hover .fig .like_cap {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+}
+.no-touch .propWidget-2:hover .fig .like_cap span {
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+    -webkit-transition-delay: 0.35s;
+    transition-delay: 0.35s;
+    opacity: 1;
+}
+/* END */
+
 .propWidget-2 ul.rating {
     list-style-type: none;
     margin: 0 0 0 -44px;
@@ -2688,6 +2730,8 @@ h1.pageTitle {
     color: #fff;
     font-size: 14px;
 }
+
+
 .no-touch .propWidget-2 ul.rating li span {
     -webkit-transition: -webkit-transform 0.35s;
     transition: transform 0.35s;

@@ -22,7 +22,7 @@
     <!--맨위에 알람하고 사용자 설정-->
     <div class="headerUserWraper">
         <% if current_user.nil? %>
-            <a href="#" class="headerUser dropdown-toggle" data-toggle="dropdown">
+            <a href="#" class="headerUser dropdown-toggle" data-toggle="modal" data-target="#signin">
                 <img class="avatar headerAvatar pull-left" src="/images/avatar-1.png" alt="avatar">
                 <div class="userTop pull-left">
                     <span class="headerUserName">로그인</span> <span class="fa fa-angle-down"></span>
@@ -139,7 +139,7 @@
                                     <label class="col-sm-2 control-label"> 공연자 / 팀 이름</label>
                                     <div class="col-sm-10">
                                         <div class="input-group">
-                                            <input id="perf_name" type="text" class="form-control" title="같은 이름이 존재합니다. " placeholder="공연자 / 팀 이름" name="team_name">
+                                            <input id="perf_name" type="text" class="form-control" title="같은 이름이 존재합니다. " placeholder="공연자 / 팀 이름" name="team_name" required>
                                             
                                         </div>
                                     </div>
@@ -150,15 +150,15 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">메인 소개 사진</label>
                                     <div class="col-sm-10">
-                                        <input type="file" name="team_pic" class="file" multiple data-show-upload="false" data-show-caption="false" data-show-remove="false" accept="image/jpeg,image/png" data-browse-class="btn btn-o btn-default" data-browse-label="파일 찾기">
-                                        <p class="help-block">사진은 1장만 등록 가능 합니다</p>
+                                        <input type="file" name="team_pic" class="file" multiple data-show-upload="false" data-show-caption="false" data-show-remove="false" accept="image/jpeg,image/png" data-browse-class="btn btn-o btn-default" data-browse-label="파일 찾기" required>
+                                        <p class="help-block">공연자 메인 사진 1장은 필수 등록입니다</p>
                                     </div>
                                 </div>
                         
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label"> 10자 소개 </label>
                                     <div class="col-sm-10">
-                                        <input class="form-control" type="text" placeholder="10자 소개" name="team_loca">
+                                        <input class="form-control" type="text" placeholder="10자 소개" name="team_loca" required>
                                     </div>
                                 </div>
                                 
@@ -205,16 +205,16 @@
                                     <label class="col-sm-2 control-label">공연 장르 선택<p class="help-block">1개의 장르만 선택 가능합니다
                                     <br> 자신을 대표할 수 있는 키워드를 골라주세요</p></label>
                                     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                                        <div class="checkbox custom-checkbox"><label><input type="checkbox" name="team_musical" value="뮤지컬"><span class="fa fa-check"></span> 뮤지컬</label></div>
-                                        <div class="checkbox custom-checkbox"><label><input type="checkbox" name="team_play" value="연극"><span class="fa fa-check"></span> 연극</label></div>
-                                        <div class="checkbox custom-checkbox"><label><input type="checkbox" name="team_concert" value="콘서트"><span class="fa fa-check"></span> 콘서트</label></div>
-                                        <div class="checkbox custom-checkbox"><label><input type="checkbox" name="team_classic" value="클래식 무용 댄스"><span class="fa fa-check"></span> 클래식 무용 댄스</label></div>
+                                        <div class="checkbox custom-checkbox"><label><input type="checkbox" name="team_musical" value="뮤지컬" onclick='chkcontrol(0)'><span class="fa fa-check"></span> 뮤지컬</label></div>
+                                        <div class="checkbox custom-checkbox"><label><input type="checkbox" name="team_play" value="연극" onclick='chkcontrol(1)'><span class="fa fa-check"></span> 연극</label></div>
+                                        <div class="checkbox custom-checkbox"><label><input type="checkbox" name="team_concert" value="콘서트" onclick='chkcontrol(2)'><span class="fa fa-check"></span> 콘서트</label></div>
+                                        <div class="checkbox custom-checkbox"><label><input type="checkbox" name="team_classic" value="클래식 무용 댄스" onclick='chkcontrol(3)'><span class="fa fa-check"></span> 클래식 무용 댄스</label></div>
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-                                        <div class="checkbox custom-checkbox"><label><input type="checkbox" name="team_jeonsi" value="전시"><span class="fa fa-check"></span> 전시</label></div>
-                                        <div class="checkbox custom-checkbox"><label><input type="checkbox" name="team_sport" value="스포츠"><span class="fa fa-check"></span> 스포츠</label></div>
-                                        <div class="checkbox custom-checkbox"><label><input type="checkbox" name="team_busking" value="버스킹"><span class="fa fa-check"></span> 버스킹</label></div>
-                                        <div class="checkbox custom-checkbox"><label><input type="checkbox" name="team_etc" value="기타"><span class="fa fa-check"></span> 기타</label></div>
+                                        <div class="checkbox custom-checkbox"><label><input type="checkbox" name="team_jeonsi" value="전시" onclick='chkcontrol(4)'><span class="fa fa-check"></span> 전시</label></div>
+                                        <div class="checkbox custom-checkbox"><label><input type="checkbox" name="team_sport" value="스포츠" onclick='chkcontrol(5)'><span class="fa fa-check"></span> 스포츠</label></div>
+                                        <div class="checkbox custom-checkbox"><label><input type="checkbox" name="team_busking" value="버스킹" onclick='chkcontrol(6)'><span class="fa fa-check"></span> 버스킹</label></div>
+                                        <div class="checkbox custom-checkbox"><label><input type="checkbox" name="team_etc" value="기타" onclick='chkcontrol(7)'><span class="fa fa-check"></span> 기타</label></div>
 
                                     </div>
                                 </div>
@@ -239,6 +239,49 @@
     </div>
     <div class="clearfix"></div>
 </div>
+
+<!--로그인 팝업 뜨는거 -->
+<div class="modal fade" id="signin" role="dialog" aria-labelledby="signinLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="signinLabel">로그인</h4>
+            </div>
+            <div class="modal-body">
+                
+              <%= form_for(resource, as: resource_name, url: session_path(resource_name), role: "form") do |f| %>
+                <div class="field">
+                  <div class="form-group">
+                    <%= f.text_field :username, autofocus: true, placeholder: "아이디", class: "form-control"  %>
+                  </div>
+                </div>
+              
+                <div class="field">
+                  <div class="form-group">
+                    <%= f.password_field :password, autocomplete: "off", placeholder: "비밀번호", class: "form-control" %>
+                  </div>
+                </div>
+              
+                <% if devise_mapping.rememberable? -%>
+                  <div class="field">
+                    <div class="form-group">
+                      <%= f.check_box :remember_me %>
+                      <%= f.label :remember_me %>
+                    </div>
+                  </div>
+                <% end %>
+              
+                <div class="actions">
+                  <div class="form-group">
+                    <%= f.submit "로그인", class: "btn btn-lg btn-green", style: "width: 100%" %>
+                  </div>
+                </div>
+              <% end %>             
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type='text/javascript'>
 $(document).ready(function(){
     $.when(
@@ -251,6 +294,7 @@ $(document).ready(function(){
         $.getScript('/js/bootstrap-datepicker.js'),
         $.getScript('/js/jquery.visible.js'),
         $.getScript('/js/fileinput.min.js'),
+        $.getScript('/js/add_check.js'),
 
         $.Deferred(function( deferred ){
               $( deferred.resolve );

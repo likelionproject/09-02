@@ -124,7 +124,7 @@
                                     '<div class="clearfix"></div>' +
                                     '<div class="infoButtons">' +
                                         '<a class="btn btn-sm btn-round btn-gray btn-o closeInfo">Close</a>' +
-                                        '<a href="' + prop.id + '" class="btn btn-sm btn-round btn-green viewInfo">View</a>' +
+                                        '<a href="/culture/single/' + prop.id + '" class="btn btn-sm btn-round btn-green viewInfo">View</a>' +
                                     '</div>' +
                                  '</div>';
 
@@ -203,20 +203,6 @@
         var areaSliderRangeWidth = $('.areaSlider .ui-slider-range').width();
         var areaSliderLeft = areaSliderRangeLeft + ( areaSliderRangeWidth / 2 ) - ( $('.areaSlider .sliderTooltip').width() / 2 );
         $('.areaSlider .sliderTooltip').css('left', areaSliderLeft);
-    }
-
-    var repositionTooltip = function( e, ui ){
-        var div = $(ui.handle).data("bs.tooltip").$tip[0];
-        var pos = $.extend({}, $(ui.handle).offset(), { 
-                        width: $(ui.handle).get(0).offsetWidth,
-                        height: $(ui.handle).get(0).offsetHeight
-                    });
-        var actualWidth = div.offsetWidth;
-
-        var tp = {left: pos.left + pos.width / 2 - actualWidth / 2}
-        $(div).offset(tp);
-
-        $(div).find(".tooltip-inner").text( ui.value );
     }
 
     windowResizeHandler();
@@ -351,15 +337,6 @@
         }
 
         setTimeout(function() {
-            var priceSliderRangeLeft = parseInt($('.priceSlider .ui-slider-range').css('left'));
-            var priceSliderRangeWidth = $('.priceSlider .ui-slider-range').width();
-            var priceSliderLeft = priceSliderRangeLeft + ( priceSliderRangeWidth / 2 ) - ( $('.priceSlider .sliderTooltip').width() / 2 );
-            $('.priceSlider .sliderTooltip').css('left', priceSliderLeft);
-
-            var areaSliderRangeLeft = parseInt($('.areaSlider .ui-slider-range').css('left'));
-            var areaSliderRangeWidth = $('.areaSlider .ui-slider-range').width();
-            var areaSliderLeft = areaSliderRangeLeft + ( areaSliderRangeWidth / 2 ) - ( $('.areaSlider .sliderTooltip').width() / 2 );
-            $('.areaSlider .sliderTooltip').css('left', areaSliderLeft);
 
             if (map) {
                 google.maps.event.trigger(map, 'resize');
@@ -394,68 +371,13 @@
         }
     });
 
-    $('.priceSlider').slider({
-        range: true,
-        min: 0,
-        max: 2000000,
-        values: [500000, 1500000],
-        step: 10000,
-        slide: function(event, ui) {
-            $('.priceSlider .sliderTooltip .stLabel').html(
-                '$' + ui.values[0].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + 
-                ' <span class="fa fa-arrows-h"></span> ' +
-                '$' + ui.values[1].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-            );
-            var priceSliderRangeLeft = parseInt($('.priceSlider .ui-slider-range').css('left'));
-            var priceSliderRangeWidth = $('.priceSlider .ui-slider-range').width();
-            var priceSliderLeft = priceSliderRangeLeft + ( priceSliderRangeWidth / 2 ) - ( $('.priceSlider .sliderTooltip').width() / 2 );
-            $('.priceSlider .sliderTooltip').css('left', priceSliderLeft);
-        }
-    });
-    $('.priceSlider .sliderTooltip .stLabel').html(
-        '$' + $('.priceSlider').slider('values', 0).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + 
-        ' <span class="fa fa-arrows-h"></span> ' +
-        '$' + $('.priceSlider').slider('values', 1).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-    );
-    var priceSliderRangeLeft = parseInt($('.priceSlider .ui-slider-range').css('left'));
-    var priceSliderRangeWidth = $('.priceSlider .ui-slider-range').width();
-    var priceSliderLeft = priceSliderRangeLeft + ( priceSliderRangeWidth / 2 ) - ( $('.priceSlider .sliderTooltip').width() / 2 );
-    $('.priceSlider .sliderTooltip').css('left', priceSliderLeft);
-
-    $('.areaSlider').slider({
-        range: true,
-        min: 0,
-        max: 20000,
-        values: [5000, 10000],
-        step: 10,
-        slide: function(event, ui) {
-            $('.areaSlider .sliderTooltip .stLabel').html(
-                ui.values[0].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + ' Sq Ft' +
-                ' <span class="fa fa-arrows-h"></span> ' +
-                ui.values[1].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + ' Sq Ft'
-            );
-            var areaSliderRangeLeft = parseInt($('.areaSlider .ui-slider-range').css('left'));
-            var areaSliderRangeWidth = $('.areaSlider .ui-slider-range').width();
-            var areaSliderLeft = areaSliderRangeLeft + ( areaSliderRangeWidth / 2 ) - ( $('.areaSlider .sliderTooltip').width() / 2 );
-            $('.areaSlider .sliderTooltip').css('left', areaSliderLeft);
-        }
-    });
-    $('.areaSlider .sliderTooltip .stLabel').html(
-        $('.areaSlider').slider('values', 0).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + ' Sq Ft' +
-        ' <span class="fa fa-arrows-h"></span> ' +
-        $('.areaSlider').slider('values', 1).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + ' Sq Ft'
-    );
-    var areaSliderRangeLeft = parseInt($('.areaSlider .ui-slider-range').css('left'));
-    var areaSliderRangeWidth = $('.areaSlider .ui-slider-range').width();
-    var areaSliderLeft = areaSliderRangeLeft + ( areaSliderRangeWidth / 2 ) - ( $('.areaSlider .sliderTooltip').width() / 2 );
-    $('.areaSlider .sliderTooltip').css('left', areaSliderLeft);
-
     $('.volume .btn-round-right').click(function() {
         var currentVal = parseInt($(this).siblings('input').val());
         if (currentVal < 10) {
             $(this).siblings('input').val(currentVal + 1);
         }
     });
+    
     $('.volume .btn-round-left').click(function() {
         var currentVal = parseInt($(this).siblings('input').val());
         if (currentVal > 1) {
@@ -515,37 +437,6 @@
 
     $('.progress-bar[data-toggle="tooltip"]').tooltip();
     $('.tooltipsContainer .btn').tooltip();
-
-    $("#slider1").slider({
-        range: "min",
-        value: 50,
-        min: 1,
-        max: 100,
-        slide: repositionTooltip,
-        stop: repositionTooltip
-    });
-    $("#slider1 .ui-slider-handle:first").tooltip({ title: $("#slider1").slider("value"), trigger: "manual"}).tooltip("show");
-
-    $("#slider2").slider({
-        range: "max",
-        value: 70,
-        min: 1,
-        max: 100,
-        slide: repositionTooltip,
-        stop: repositionTooltip
-    });
-    $("#slider2 .ui-slider-handle:first").tooltip({ title: $("#slider2").slider("value"), trigger: "manual"}).tooltip("show");
-
-    $("#slider3").slider({
-        range: true,
-        min: 0,
-        max: 500,
-        values: [ 190, 350 ],
-        slide: repositionTooltip,
-        stop: repositionTooltip
-    });
-    $("#slider3 .ui-slider-handle:first").tooltip({ title: $("#slider3").slider("values", 0), trigger: "manual"}).tooltip("show");
-    $("#slider3 .ui-slider-handle:last").tooltip({ title: $("#slider3").slider("values", 1), trigger: "manual"}).tooltip("show");
 
     $('#autocomplete').autocomplete({
         source: ["ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme"],
