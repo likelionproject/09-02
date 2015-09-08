@@ -310,10 +310,15 @@
                         </div>
                         <div class="commentActions">
                             <div class="commentTime"><span class="icon-clock"></span> <%= c.updated_at.to_formatted_s(:db) %></div>
-                            <ul>
-                                <li><a href="#"><span class="icon-action-undo"></span></a></li> <!-- comment 답글 -->
-                                <li><a href="/culture/comment_destory/?pid=<%=@pid.id%>&cid=<%= c.id %>"><span class="fa fa-trash-o"></span></a></li>
-                            </ul>
+                            <% unless current_user.nil? %>
+                                <% if current_user.id === @pfid.user_id || current_user.typenum == 2 %>
+                                <ul>
+                                    <li><a href="#"><span class="icon-action-undo"></span></a></li> <!-- comment 답글 -->
+                                    <li><a href="/culture/comment_destory/?pid=<%=@pid.id%>&cid=<%= c.id %>"><span class="fa fa-trash-o"></span></a></li>
+                                </ul>
+                                <% else %>
+                                <% end %>
+                            <% end %>
                             <div class="clearfix"></div>
                         </div>
                     </div>

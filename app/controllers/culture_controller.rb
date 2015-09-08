@@ -54,8 +54,13 @@ class CultureController < ApplicationController
     def explore
         
         # 공연 record 
-        @articles = Newpf.all
         
+        ## perform a paginated query:
+        @articles = Newpf.paginate(:page => params[:page])
+        
+        # or, use an explicit "per page" limit:
+        Newpf.paginate(:page => params[:page], :per_page => 30)
+
         # 세션이 존재하는지 여부 확인
         if current_user.nil?
             @pfid = nil
