@@ -134,11 +134,11 @@
                     infobox.open(map, marker);
                 }
             })(marker, i));
-
+            
             $(document).on('click', '.closeInfo', function() {
                 infobox.open(null,null);
             });
-
+            
             markers.push(marker);
         });
     }

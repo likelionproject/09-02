@@ -35,15 +35,7 @@ class CultureController < ApplicationController
         hello.pf_time_start = params[:pf_time_start]
         hello.pf_time_end = params[:pf_time_end]
         
-        hello.musical = params[:musical]
-        hello.play = params[:play]
-        hello.concert = params[:concert]
-        hello.classic = params[:classic]
-        hello.jeonsi = params[:jeonsi]
-        hello.sport = params[:sport]
-        hello.busking = params[:busking]
-        hello.amateur = params[:amateur]
-        hello.etc = params[:etc]
+        hello.pf_kind = params[:pf_kind].to_i
         hello.save
         
         redirect_to '/culture/explore'
@@ -52,15 +44,11 @@ class CultureController < ApplicationController
     
     # 공연 모아보기
     def explore
-        
         # 공연 record 
         
-        ## perform a paginated query:
-        @articles = Newpf.paginate(:page => params[:page])
+        ## perform a paginated query: 
+        @articles = Newpf.paginate(:page => params[:page], :per_page => 8).order('pf_date ASC')
         
-        # or, use an explicit "per page" limit:
-        Newpf.paginate(:page => params[:page], :per_page => 30)
-
         # 세션이 존재하는지 여부 확인
         if current_user.nil?
             @pfid = nil
@@ -180,15 +168,8 @@ class CultureController < ApplicationController
         @pid.pf_time_start = params[:new_pf_time_start]
         @pid.pf_time_end = params[:new_pf_time_end]
         
-        @pid.musical = params[:new_musical]
-        @pid.play = params[:new_play]
-        @pid.concert = params[:new_concert]
-        @pid.classic = params[:new_classic]
-        @pid.jeonsi = params[:new_jeonsi]
-        @pid.sport = params[:new_sport]
-        @pid.busking = params[:new_busking]
-        @pid.amateur = params[:new_amateur]
-        @pid.etc = params[:new_etc]
+        @pid.pf_kind = params[:pf_kind].to_i
+
         @pid.save
         
         redirect_to '/culture/single/' + @pid.id.to_s
@@ -208,9 +189,54 @@ class CultureController < ApplicationController
         
     end
     
+    def team_search
+        @teams = Performanceinfo.search(params[:query]).order("performanceinfos.id DESC").as_json
+        
+        respond_to do |format|
+          format.html do 
+              render :json => @teams
+          end
+        end
+    end
+    
+    def category_team
+        unless params[:pType] == 'all'
+            @teams = Performanceinfo.where(:team_kind => params[:pType]).order("performanceinfos.id DESC").as_json
+        else
+            @teams = Performanceinfo.all.order("performanceinfos.id DESC").as_json
+        end
+        
+        respond_to do |format|
+          format.html do 
+              render :json => @teams
+          end
+        end
+    end 
     
     
+    def category_newpf
+        unless params[:pType] == "all"
+            @posts = Newpf.where(:pf_kind => params[:pType]).order("newpfs.pf_date asc").as_json
+        else
+            @posts = Newpf.all.order("newpfs.pf_date asc").as_json
+        end
+        
+        respond_to do |format|
+          format.html do 
+              render :json => @posts
+          end
+        end
+    end
+    
+    # 검색 기능 json 출력
     def search
+        @posts = Newpf.search(params[:query]).order("newpfs.pf_date asc").as_json
+        
+        respond_to do |format|
+          format.html do 
+              render :json => @posts
+          end
+        end
     end
     
     # 공연팀 출력
@@ -241,17 +267,9 @@ class CultureController < ApplicationController
         hello.team_fb = params[:team_fb]
         hello.team_tw = params[:team_tw]
         hello.team_blog = params[:team_blog]
-
-        hello.team_musical = params[:team_musical]
-        hello.team_play = params[:team_play]
-        hello.team_concert = params[:team_concert]
-        hello.team_classic = params[:team_classic]
-        hello.team_jeonsi = params[:team_jeonsi]
-        hello.team_sport = params[:team_sport]
-        hello.team_busking = params[:team_busking]
-        hello.team_amateur = params[:team_amateur]
-        hello.team_etc = params[:team_etc]
+        hello.team_kind = params[:pf_kind].to_i
         hello.save
+    
         
         redirect_to '/culture/pfadd'
         
@@ -289,15 +307,8 @@ class CultureController < ApplicationController
         @pfid.team_tw = params[:new_team_tw]
         @pfid.team_blog = params[:new_team_blog]
 
-        @pfid.team_musical = params[:new_team_musical]
-        @pfid.team_play = params[:new_team_play]
-        @pfid.team_concert = params[:new_team_concert]
-        @pfid.team_classic = params[:new_team_classic]
-        @pfid.team_jeonsi = params[:new_team_jeonsi]
-        @pfid.team_sport = params[:new_team_sport]
-        @pfid.team_busking = params[:new_team_busking]
-        @pfid.team_amateur = params[:new_team_amateur]
-        @pfid.team_etc = params[:new_team_etc]
+        @pfid.team_kind = params[:pf_kind].to_i
+        
         @pfid.save
         
         redirect_to '/culture/pfadd'

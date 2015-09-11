@@ -34,15 +34,7 @@ ActiveRecord::Schema.define(version: 20150903071028) do
     t.string  "pf_time_start"
     t.string  "pf_time_end"
     t.integer "performanceinfo_id"
-    t.string  "musical"
-    t.string  "play"
-    t.string  "concert"
-    t.string  "classic"
-    t.string  "jeonsi"
-    t.string  "sport"
-    t.string  "busking"
-    t.string  "amateur"
-    t.string  "etc"
+    t.integer "pf_kind"
   end
 
   create_table "performanceinfos", force: :cascade do |t|
@@ -55,17 +47,9 @@ ActiveRecord::Schema.define(version: 20150903071028) do
     t.string   "team_fb"
     t.string   "team_tw"
     t.string   "team_blog"
-    t.string   "team_musical"
-    t.string   "team_play"
-    t.string   "team_concert"
-    t.string   "team_classic"
-    t.string   "team_jeonsi"
-    t.string   "team_sport"
-    t.string   "team_busking"
-    t.string   "team_amateur"
-    t.string   "team_etc"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "team_kind"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "users", force: :cascade do |t|

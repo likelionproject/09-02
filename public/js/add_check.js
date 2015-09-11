@@ -12,6 +12,7 @@ $(document).ready(function(){
 function chkcontrol(j) {
     var total=0;
     for(var i=0; i < ckb.length; i++){
+        ckb[i].setAttribute("name", "");
         if(total > 1){
             alert("공연 카테고리는 1개의 장르만 선택가능합니다.") 
             ckb[j].checked = false ;
@@ -19,8 +20,8 @@ function chkcontrol(j) {
         }
         if(ckb[i].checked){
             total =total +1;
+            ckb[i].setAttribute("name", "pf_kind");
         }
-  
     }
 } 
 

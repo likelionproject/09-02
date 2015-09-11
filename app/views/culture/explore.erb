@@ -108,7 +108,7 @@
 </div>
 <!--맨위에 사용자 알람 토글다운 끝-->
      
-         <!--왼쪽 사이드바 설정 시작 -->
+<!--왼쪽 사이드바 설정 시작 -->
 <div id="leftSide">
     <nav class="leftNav scrollable">
         <div class="search">
@@ -125,6 +125,8 @@
                     <li><a href="/culture/add"><span class="navIcon icon-pin"></span><span class="navLabel">공연 등록</span></a></li>
                     <li><a href="/culture/pfupload"><span class="navIcon icon-user-follow"></span><span class="navLabel">공연자 등록</span></a></li>
                 <% end %>
+            <% else %> 
+                <li><a href="#" data-toggle="modal" data-target="#signin"><span class="navIcon icon-user"></span><span class="navLabel">로그인</span></li>
             <% end %>
             
         </ul>
@@ -162,29 +164,29 @@
                                 <span class="fa fa-angle-down dsArrow"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-select full" role="menu">
-                                <li class="active"><input type="radio" name="pType" checked="checked"><a href="#">모두 보기</a></li>
-                                <li><input id="radio_filter0" type="radio" name="pType" value="musical"><a href="#">뮤지컬</a></li>
-                                <li><input id="radio_filter1" type="radio" name="pType" value="play"><a href="#">연극</a></li>
-                                <li><input id="radio_filter2" type="radio" name="pType" value="콘서트"><a href="#">콘서트</a></li>
-                                <li><input id="radio_filter3" type="radio" name="pType" value="클래식 무용"><a href="#">클래식 무용</a></li>
-                                <li><input id="radio_filter4" type="radio" name="pType" value="전시"><a href="#">전시</a></li>
-                                <li><input id="radio_filter5" type="radio" name="pType" value="스포츠"><a href="#">스포츠</a></li>
-                                <li><input id="radio_filter6" type="radio" name="pType" value="버스킹"><a href="#">버스킹</a></li>
-                                <li><input id="radio_filter7" type="radio" name="pType" value="아마추어 동아리"><a href="#">아마추어 동아리</a></li>
-                                <li><input id="radio_filter8" type="radio" name="pType" value="기타"><a href="#">기타</a></li>
+                                <li class="active"><input type="radio" name="pType" value="all" checked><a href="#" name="aType">모두 보기</a></li>
+                                <li><input type="radio" name="pType" value="0"><a href="#" name="aType">뮤지컬</a></li>
+                                <li><input type="radio" name="pType" value="1"><a href="#" name="aType">연극</a></li>
+                                <li><input type="radio" name="pType" value="2"><a href="#" name="aType">콘서트</a></li>
+                                <li><input type="radio" name="pType" value="3"><a href="#" name="aType">댄스</a></li>
+                                <li><input type="radio" name="pType" value="4"><a href="#" name="aType">전시</a></li>
+                                <li><input type="radio" name="pType" value="5"><a href="#" name="aType">스포츠</a></li>
+                                <li><input type="radio" name="pType" value="6"><a href="#" name="aType">버스킹</a></li>
+                                <li><input type="radio" name="pType" value="7"><a href="#" name="aType">아마추어 동아리</a></li>
+                                <li><input type="radio" name="pType" value="8"><a href="#" name="aType">기타</a></li>
                             <!--공연카테고리 토글다운 끝-->
                             </ul>
                             <script>
-                                $('#radio_filter[' + 1 + ']')
+                                
                             </script>
                         </div>
                         
                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 formItem">
                             <label>공연 검색</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="공연의 이름을 입력하세요">
+                                <input type="text" id="search_pf" class="form-control" placeholder="공연의 이름을 입력하세요">
                                 <span class="input-group-btn">
-                                    <a href="#" class="btn btn-green">검색하기</a>
+                                    <button id="search_submit" class="btn btn-green">검색하기</a>
                                 </span>
                             </div>
                         </div>
@@ -197,44 +199,15 @@
         
         <!--오른쪽 사진과 짤막한 공연정보 사이드바-->
         <div class="resultsList">
-            <div class="row">
-                <% @articles.sort_by{|a| a.pf_date}.each do |x| %>
-                <% next if x.pf_date < Date.today # 지나간 공연 배제 %>
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <a href="/culture/single/<%= x.id %>" class="card">
-                        
-                        <div class="figure">
-                            <img src="<%= x.pf_image %>" alt="image" width="200px" height="200px">
-                            <div class="figView"><span class="icon-eye"></span></div>
-                            <div class="figType">공연예정</div>
-                        </div>
-                        <h2><%= x.pf_title %></h2>
-                        <br>
-                        <div class="cardAddress"><span class="icon-calendar">  </span> 날짜 : <%= x.pf_date %>  </span> </div>
-                        <div class="cardAddress"><span class="fa fa-clock-o">  </span> 시간 : <%=x.pf_time_start%>~<%=x.pf_time_end%> </span></div>
-                        <div class="cardAddress"><span class="icon-pointer">  </span> 위치 : <%= x.pf_address_sub %> </div>
-                        <div class="cardAddress"><span class="fa fa-child">  </span> 위치 설명 : <%= x.pf_add_br %> </div>
-                        <div class="cardAddress"> 장르 : <%= x.musical %>  <%= x.play %>  <%= x.concert %> <%= x.classic %> <%= x.jeonsi %> <%= x.sport %> <%= x.busking %> <%= x.amateur %> <%= x.etc %></div>
-
-                        <!--별점-->
-                        
-                        <div class="clearfix"></div>
-                    </a>
-                </div>
-                <% end %>
+            <div class="row" id="main_results">
+                <%= render partial: "newpf", collection: @articles %>
             </div>
             <!--오른쪽 사이드바 공연 사진 설명 끝-->
             
             <!--오른쪽 사이드바 밑에 페이지 번호 -->
-            <ul class="pagination">
-                <li class="disabled"><a href="#"><span class="fa fa-angle-left"></span></a></li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#"><span class="fa fa-angle-right"></span></a></li>
-            </ul>
+            <%= will_paginate @articles, :renderer => BootstrapLinkRenderer, :inner_window => 2, :outer_window => 0, :previous_label => '&larr;', :next_label => '&rarr;' %>
+            
+        
             <!--오른쪽 사이드바 밑에 페이지 번호 끝-->
         </div>
     </div>
@@ -294,6 +267,7 @@ $(document).ready(function(){
         $.getScript('/js/jquery.touchSwipe.min.js'),
         $.getScript('/js/jquery.slimscroll.min.js'),
         $.getScript('/js/jquery.tagsinput.min.js'),
+        $.getScript('/js/explore_search.js'),
         $.Deferred(function( deferred ){
               $( deferred.resolve );
         })

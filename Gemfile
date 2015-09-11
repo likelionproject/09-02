@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'search_cop'
+
 gem 'will_paginate'
 
 gem 'acts_as_votable', '~> 0.10.0'

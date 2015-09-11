@@ -17,15 +17,7 @@ class CreateNewpfs < ActiveRecord::Migration
       
       t.integer :performanceinfo_id # 공연팀 프로필 id
       
-      t.string :musical
-      t.string :play
-      t.string :concert
-      t.string :classic
-      t.string :jeonsi
-      t.string :sport
-      t.string :busking
-      t.string :amateur
-      t.string :etc
+      t.integer :pf_kind # 0:뮤지컬, 1:연극, 2:콘서트, 3:클래식무용, 4:전시, 5: 스포츠, 6:버스킹, 7:아마추어 동아리
 
     end
   end

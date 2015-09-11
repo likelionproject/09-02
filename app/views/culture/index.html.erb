@@ -1,4 +1,4 @@
-
+<!-- 메인페이지 -->
 <script>
    $(document.body).attr("class", "notransition no-hidden"); 
 </script>
@@ -54,7 +54,7 @@
     </div>
     <div class="home-caption" style="background:rgba( 0, 0, 0, 0.7)">
         <div class="home-title">오늘은 뭐한대?</div>
-        <div class="home-subtitle">내 주변에서 열리는 1024개의 문화정보를 만나보세요</div>
+        <div class="home-subtitle">내 주변에서 열리는 <%= Newpf.count %>개의 문화정보를 만나보세요</div>
         <a href="culture/explore" class="btn btn-lg btn-yellow">뭐한대?! 이용방법</a>
         <br><br>
     </div>
@@ -119,7 +119,7 @@
         <div class="row pb40">
             <% @popular_artists.each do |p| %>
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                <a href="/culture/single" class="propWidget-2">
+                <a href="/culture/profile/<%= p.id %>" class="propWidget-2">
                     <div class="fig">
                         <img src="<%=p.team_pic%>" alt="<%=p.team_name%>" width="353.328px" height="212px">
                         <img class="blur" style="background-color:rgba(0,0,0,0.7)" alt="<%=p.team_name%>" width="353.328px" height="212px">
@@ -154,29 +154,35 @@
     <div class="home-wrapper">
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-                <div class="osLight footer-header">뭐한대? 이야기</div>
-                <ul class="footer-nav pb20">
-                    <li><a href="#"> 소개 </a></li>
-
-                </ul>
+                <center>
+                    <div class="osLight footer-header">뭐한대? 이야기</div>
+                    <ul class="footer-nav pb20">
+                        <li><a href="#"> 소개 </a></li>
+    
+                    </ul>
+                </center>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-                <div class="osLight footer-header">둘러보기</div>
-                <ul class="footer-nav pb20">
-                    <li><a href="/culture/explore">공연 모아보기</a></li>
-                    <li><a href="/culture/pfadd">공연자 모아보기</a></li>
-                    
-
-                </ul>
+                <center>
+                    <div class="osLight footer-header">둘러보기</div>
+                    <ul class="footer-nav pb20">
+                        <li><a href="/culture/explore">공연 모아보기</a></li>
+                        <li><a href="/culture/pfadd">공연자 모아보기</a></li>
+                        
+    
+                    </ul>
+                </center>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                <div class="osLight footer-header">공연 등록하기</div>
-                <ul class="footer-nav pb20">
-
-                    <li class="footer-address osLight">
-                        <p>공연 등록하는 방법</p>
-                    </li>
-                </ul>
+                <center>
+                    <div class="osLight footer-header">공연 등록하기</div>
+                    <ul class="footer-nav pb20">
+    
+                        <li class="footer-address osLight">
+                            <p>공연 등록하는 방법</p>
+                        </li>
+                    </ul>
+                </center>
             </div>
         </div>
         <div class="copyright">© 뭐한대?!, 2015 베타서비스.</div>
