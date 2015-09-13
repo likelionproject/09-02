@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'browser'
 gem 'search_cop'
 
 gem 'will_paginate'

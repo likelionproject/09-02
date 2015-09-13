@@ -10,6 +10,15 @@ class CultureController < ApplicationController
         @popular_artists = Performanceinfo.all.sort_by{ |artist| artist.get_likes(:vote_scope => 'interest').size }.take(6).reverse
     end
     
+    def introduce 
+        if user_signed_in? 
+           #yes
+           @user_type = current_user.typenum # 0 => viewer, 1 => performer
+        end
+        
+        @popular_pfs = Newpf.all.sort_by{ |post| post.get_likes.size }.take(6).reverse
+        @popular_artists = Performanceinfo.all.sort_by{ |artist| artist.get_likes(:vote_scope => 'interest').size }.take(6).reverse
+    end
     # 공연 등록 창
     def add
         if current_user.nil?

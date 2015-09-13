@@ -4454,7 +4454,7 @@ a.home-navHandler.active {
     height: 260px;
     overflow: hidden;
     position: relative;
-    background: #fff;
+    background: #EDEFED;
     -webkit-transition: all 300ms linear;
     -moz-transition: all 300ms linear;
     -o-transition: all 300ms linear;
